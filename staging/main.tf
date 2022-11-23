@@ -1,3 +1,4 @@
+# Some comment
 terraform {
   required_providers {
     aws = {
@@ -34,6 +35,14 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+data "terraform_remote_state" "s3" {
+backend = "s3"
+config = {
+bucket = "carolinaweek11bucket"
+key ="prod/terraform.tfstate" 
+region = "us-east-1"
+}
+}
 
 resource "aws_security_group" "web-sg" {
   name = "${random_pet.sg.id}-sg"
